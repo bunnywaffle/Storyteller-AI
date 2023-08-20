@@ -29,7 +29,6 @@ The Storyteller-AI project is open to contributions from anyone. If you would li
 We need the following to complete the Storyteller-AI project:
 
 * More developers to help with the implementation of the platform.
-* Creative writers to submit stories to the platform.
 * Testers to help us find and fix bugs.
 * Users to provide feedback on the platform.
 
