@@ -1,6 +1,6 @@
 # Storyteller-AI
 
-Storyteller-AI is an open-source project that aims to create a platform for storytellers and story listeners. The platform will allow users to submit their own stories, browse stories created by others, and listen to stories in voice using a built-in text-to-speech (TTS) engine.
+Storyteller-AI is an open-source project that aims to create a platform for storytellers and story listeners. The platform will allow users to submit their own stories, browse stories created by others, and listen to stories in voice using a built-in text-to-speech (TTS).
 
 # Features
 
