@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Storyteller-AI</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #0c0c0c, #222);
+            color: #fff;
+        }
+
+        header {
+            background-color: #111;
+            text-align: center;
+            padding: 1rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .story-card {
+            background-color: #1e1e1e;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .story-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .story-author {
+            font-size: 1rem;
+            color: #888;
+            margin-bottom: 0.5rem;
+        }
+
+        .story-content {
+            font-size: 1rem;
+            color: #ddd;
+        }
+
+        .submit-button {
+            background-color: #f39c12;
+            color: #fff;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .submit-button:hover {
+            background-color: #e67e22;
+        }
+
+        .create-story-button {
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .create-story-button:hover {
+            background-color: #2980b9;
+        }
+
+        .glow {
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+
+        .genre {
+            font-size: 0.8rem;
+            color: #999;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Popup styles */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .popup-content {
+            background-color: #1e1e1e;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            max-width: 80%;
+            max-height: 80%;
+            overflow: auto;
+        }
+
+        /* Close button */
+        .close-button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            color: #aaa;
+            cursor: pointer;
+        }
+
+        .close-button:hover {
+            color: #fff;
+        }
+        @media (max-width: 768px) {
+            header {
+                padding: 0.5rem;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+            .story-card {
+                padding: 0.5rem;
+            }
+
+            .story-title {
+                font-size: 1.2rem;
+            }
+
+            .genre {
+                font-size: 0.7rem;
+            }
+
+            .story-author,
+            .story-content {
+                font-size: 0.9rem;
+            }
+
+            .submit-button,
+            .create-story-button {
+                padding: 0.3rem 0.6rem;
+                font-size: 0.8rem;
+            }
+
+            .popup-content {
+                padding: 1rem;
+                max-width: 95%;
+                max-height: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 class="glow">Welcome to Storyteller-AI</h1>
+        <p>Share and discover captivating stories</p>
+        <button class="create-story-button">Create Story</button>
+    </header>
+
+    <div class="container">
+        <div class="story-card">
+            <h2 class="story-title">The Enchanted Forest</h2>
+            <p class="genre">Fantasy</p>
+            <p class="story-author">By Jane Doe</p>
+            <p class="story-content">Once upon a time in a land far, far away...</p>
+            <button class="open-popup-button">Read Story</button>
+        </div>
+
+        <div class="story-card">
+            <h2 class="story-title">Mystery at Midnight</h2>
+            <p class="genre">Mystery</p>
+            <p class="story-author">By John Smith</p>
+            <p class="story-content">It was a dark and stormy night...</p>
+            <button class="open-popup-button">Read Story</button>
+        </div>
+
+        <!-- Add more story cards here -->
+
+    </div>
+
+    <!-- Popup container -->
+    <div class="popup" id="story-popup">
+        <div class="popup-content">
+            <span class="close-button" id="close-popup">&times;</span>
+            <h2 class="popup-title">The Enchanted Forest</h2>
+            <p class="popup-genre">Fantasy</p>
+            <p class="popup-author">By Jane Doe</p>
+            <p class="popup-content">Once upon a time in a land far, far away...</p>
+        </div>
+    </div>
+
+    <!-- Create Story Popup -->
+    <div class="popup" id="create-story-popup">
+        <div class="popup-content">
+            <span class="close-button" id="close-create-popup">&times;</span>
+            <h2>Create a Story</h2>
+            <button class="submit-button">Submit Story</button>
+            <button class="submit-button">Write Story</button>
+        </div>
+    </div>
+
+    <script>
+        const openPopupButtons = document.querySelectorAll('.open-popup-button');
+        const createStoryButton = document.querySelector('.create-story-button');
+        const popup = document.getElementById('story-popup');
+        const createStoryPopup = document.getElementById('create-story-popup');
+        const closePopupButton = document.getElementById('close-popup');
+        const closeCreatePopupButton = document.getElementById('close-create-popup');
+
+        openPopupButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                popup.style.display = 'flex';
+            });
+        });
+
+        createStoryButton.addEventListener('click', () => {
+            createStoryPopup.style.display = 'flex';
+        });
+
+        closePopupButton.addEventListener('click', () => {
+            popup.style.display = 'none';
+        });
+
+        closeCreatePopupButton.addEventListener('click', () => {
+            createStoryPopup.style.display = 'none';
+        });
+    </script>
+</body>
+</html>
